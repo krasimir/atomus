@@ -8,6 +8,10 @@ We all know about Selenium and PhantomJS. They work well for testing client-side
 
 Atomus is helpful during unit or functional testing. That's where the name came from. It works good with the atoms of your application. You simply include your framework and the module that needs testing. Then create an instance and start playing with the DOM and the module's API.
 
+## Installation
+
+`npm install atomus`
+
 ## Simple usage
 
 All you have to do is to require the module, call the `browser` method and wait for the initialization:
