@@ -2,6 +2,7 @@
   "name": "atomus",
   "version": "0.0.1",
   "description": "A small utility for running client-side tests in Node.js environment",
+  "main": "./lib/index.js",
   "author": {
     "name": "Krasimir Tsonev",
     "email": "info@krasimirtsonev.com",
@@ -9,7 +10,10 @@
   },
   "license": "MIT",
   "dependencies": {
-    
+    "jsdom": "1.1.0"
+  },
+  "devDependencies": {
+    "mocha": "2.0.1"
   },
   "keywords": [
     "testing",
@@ -22,6 +26,6 @@
     "url": "https://github.com/krasimir/atomus.git"
   },
   "scripts": {
-    "test": ""
+    "test": "./node_modules/mocha/bin/mocha --ui tdd --recursive"
   }
 }
