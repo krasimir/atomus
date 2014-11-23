@@ -15,7 +15,7 @@ suite('Basics', function() {
       html: '<h1>Hello atomus</h1>'
     });
     b.ready(function(errors, window) {
-      assert.equal(b.html(), '<h1>Hello atomus</h1>');
+      assert.equal(b.$('body').innerHTML, '<h1>Hello atomus</h1>');
       done();
     });
   });

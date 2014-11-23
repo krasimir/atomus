@@ -26,6 +26,6 @@
     "url": "https://github.com/krasimir/atomus.git"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --ui tdd --recursive"
+    "test": "./node_modules/mocha/bin/mocha --ui tdd --recursive ./test/*.spec.js"
   }
 }
