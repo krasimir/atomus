@@ -1,4 +1,5 @@
-atomus
+# Atomus
+
 ======
 
-A small utility for running client-side tests in Node.js environment
+A small utility library for running client-side tests in Node.js environment

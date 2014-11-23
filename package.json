@@ -1,0 +1,27 @@
+{
+  "name": "atomus",
+  "version": "0.0.1",
+  "description": "A small utility for running client-side tests in Node.js environment",
+  "author": {
+    "name": "Krasimir Tsonev",
+    "email": "info@krasimirtsonev.com",
+    "url": "http://krasimirtsonev.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    
+  },
+  "keywords": [
+    "testing",
+    "client-side",
+    "front-end",
+    "dom"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/krasimir/atomus.git"
+  },
+  "scripts": {
+    "test": ""
+  }
+}
