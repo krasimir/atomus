@@ -79,7 +79,7 @@ var b = atomus({
 * `npm install`
 * `npm test`
 
-You may be interested to see how Atomus works with AngularJS. Checkout `03.angular.spec.js` file.
+There are tests that run Atomus agains [AngularJS](https://angularjs.org/) and [Ractive.js](http://www.ractivejs.org/).
 
 ## Tips
 
