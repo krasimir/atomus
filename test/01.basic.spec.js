@@ -25,16 +25,4 @@ suite('Basics', function() {
     });
   });
 
-  require('../lib')()
-  .html('<section><a href="#" id="link">click me</a></section>')
-  .external('vendor/angularjs.min.js')
-  .external('src/my-module.js')
-  .ready(function(errors, window) {
-    var $ = this.$; // jQuery
-    $('#link').on('click', function() {
-      console.log('link clicked');
-    });
-    this.clicked($('#link'));
-  });
-
 });

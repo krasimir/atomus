@@ -86,6 +86,7 @@ You may be interested to see how Atomus works with AngularJS. Checkout `03.angul
 * Have in mind that often you have to take care about the events' triggering. For example if you change the value of an input field by setting `.value` property you need to dispatch a `change` event. Otherwise you will not get the listeners called.
 * The global scope is accessible via the window object. So if you import Angular, for example, on the page you need to reference it through `window.Angular` and not just `Angular`.
 * Atomus is based on [JSDOM](https://www.npmjs.org/package/jsdom) which is not simulating everything. You may not be able to use the History API for example.
+* Atomus attaches a function `window.log` before to run the `ready` callback. Usa that methods to send data to the console from within your application.
 
 ## Other resources
 

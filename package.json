@@ -1,6 +1,6 @@
 {
   "name": "atomus",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A small utility for running client-side tests in Node.js environment",
   "main": "./lib/index.js",
   "author": {
@@ -13,7 +13,8 @@
     "jsdom": "1.1.0"
   },
   "devDependencies": {
-    "mocha": "2.0.1"
+    "mocha": "2.0.1",
+    "jshint": "2.5.10"
   },
   "keywords": [
     "testing",
@@ -26,6 +27,6 @@
     "url": "https://github.com/krasimir/atomus.git"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha --ui tdd --recursive ./test/*.spec.js"
+    "test": "./node_modules/mocha/bin/mocha --ui tdd --recursive ./test/*.spec.js && (./node_modules/jshint/bin/jshint lib/index.js ; echo)"
   }
 }
