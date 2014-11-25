@@ -1,4 +1,7 @@
-# Atomus
+
+![Atomus](http://work.krasimirtsonev.com/atomus/atomus.jpg)
+
+---
 
 A small utility library for testing client-side code in Node.js. Simulate the browser in your terminal.
 
