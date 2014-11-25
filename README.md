@@ -17,8 +17,9 @@ Atomus is helpful during unit or functional testing. That's where the name came 
 All you have to do is to require the module, call the `ready` method:
 
 ```js
+var htmlStr = '<body><h1>Atomus</h1></body>';
 var atomus = require('atomus');
-var browser = atomus().html('<body><h1>Atomus</h1></body>').ready(function(errors, window) {
+var browser = atomus().html(htmlStr).ready(function(errors, window) {
   ...
 });
 ```
