@@ -79,7 +79,7 @@ var b = atomus({
 * `npm install`
 * `npm test`
 
-There are tests that run Atomus agains [AngularJS](https://angularjs.org/) and [Ractive.js](http://www.ractivejs.org/).
+Checkout the `test` folder. There are tests that run Atomus against [AngularJS](https://angularjs.org/) and [Ractive.js](http://www.ractivejs.org/) frameworks.
 
 ## Tips
 
