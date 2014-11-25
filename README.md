@@ -18,7 +18,7 @@ All you have to do is to require the module, call the `ready` method:
 
 ```js
 var atomus = require('atomus');
-var browser = atomus().ready(function(errors, window) {
+var browser = atomus().html('<body><h1>Atomus</h1></body>').ready(function(errors, window) {
   ...
 });
 ```
