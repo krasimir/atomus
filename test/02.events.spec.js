@@ -3,26 +3,26 @@ suite('Events', function() {
 
   test('Attach event listener + triggering', function(done) {
     var atomus = require('../lib');
-    var b = atomus.browser().html('<input type="text" />').ready(function(errors, window) {
+    var b = atomus().html('<input type="text" />').ready(function(errors, window) {
       var input = b.$('input');
       input.val('hello world');
-      b.on('change', function(event) {
+      input.on('change', function(event) {
         assert.equal(event.target.value, 'hello world');
         done();
       });
-      b.trigger(input, 'change');
+      b.changed(input);
     });
   });
 
   test('Make sure that there is only one triggering', function(done) {
     var atomus = require('../lib');
-    var b = atomus.browser().html('<button>click me</button').ready(function(errors, window) {
+    var b = atomus().html('<button>click me</button').ready(function(errors, window) {
       with(this) {
         var counter = 0;
         $('button').on('click', function() {
           counter += 1;
         });
-        trigger($('button'), 'click');
+        b.clicked($('button'));
         assert.equal(counter, 1);
         done();
       }
@@ -32,7 +32,7 @@ suite('Events', function() {
   test('working with radio boxes', function(done) {
     var atomus = require('../lib');
     var b = atomus
-    .browser()
+    ()
     .html('<form><input type="radio" name="blah" value="a" /><input type="radio" name="blah" value="b" /></form>')
     .ready(function(errors, window) {
       with(this) {
@@ -50,7 +50,7 @@ suite('Events', function() {
   test('working with check boxes', function(done) {
     var atomus = require('../lib');
     var b = atomus
-    .browser()
+    ()
     .html('<form><input type="checkbox" name="blah" value="a" /><input type="checkbox" name="blah" value="b" /></form>')
     .ready(function(errors, window) {
       with(this) {

@@ -14,56 +14,57 @@ Atomus is helpful during unit or functional testing. That's where the name came 
 
 ## Simple usage
 
-All you have to do is to require the module, call the `browser` method and wait for the initialization:
+All you have to do is to require the module, call the `ready` method:
 
 ```js
 var atomus = require('atomus');
-var b = atomus.browser();
-b.ready(function(errors, window) {
+var browser = atomus().ready(function(errors, window) {
   ...
 });
 ```
 The `window` that is passed to our callback is the good old Window object that we have in every browser. Thankfully to [jsdom](https://www.npmjs.org/package/jsdom) we have a JavaScript implementation of the WHATWG DOM and HTML standards. So we may call `window.document.querySelector` or `element.dispatchEvent`. In practice we may interact with the page as we are in a real browser.
 
-## The API
+## API
 
-To illustrate the available API we will simply look into a slightly more complex example:
+* `browser.ready([callback])` - call this method when you are ready with configuring your browser. The callback receives `errors` and `window` object.
+* `browser.external([filepath])` - add an absolute path to JavaScript file that you want to be injected into the page. This may be a framework or custom bundled JavaScript for example.
+* `browser.html([string])` - the initial HTML markup of the page
+
+Once the `ready` method is called we have a few other methods and objects available. 
+
+* `browser.$` - jQuery
+* `browser.window` - the usual Window object
+* `browser.clicked([jQuery object or DOM element])` - fires `click` event.
+* `browser.changed([jQuery object or DOM element])` - fires `change` event
+* `browser.focused([jQuery object or DOM element])` - fires `focus` event
+* `browser.blurred([jQuery object or DOM element])` - fires `blur` event
+* `browser.selected([jQuery object or DOM element])` - fires `click` event. Use this while you operate with radio or checkboxes. 
+
+JSDom has some problems with radio and checkboxes selecting. That's why we introduced API methods for triggering events. For sure you may use `$('#link').trigger('click')` but that's not working properly in some cases. So, we recommend using `browser` API dispatching DOM events.
+
+## Example
+
+Clicking a link on the page.
 
 ```js
-var atomus = require('atomus');
-var b = atomus.browser();
-// serting default html for the page
-b.html('<section><a href="#" id="link">click me</a></section>')
-.external('vendor/angularjs.min.js')
-.external('src/my-module.js')
-.ready(function(errors, window) {
-  
-  // calling `b.$` is equal to calling `window.document.querySelector`
-  var link = b.$('#link');
-
-  // here we listen for a DOM event bubbled to the `body` tag
-  b.on('click', function(event) {
-    e.preventDefault();
-    console.log('clicked');
+  var atomus = require('atomus');
+  atomus()
+  .html('<section><a href="#" id="link">click me</a></section>')
+  .external(__dirname + '/libs/myframework.min.js')
+  .ready(function(errors, window) {
+    var $ = this.$; // jQuery
+    $('#link').on('click', function() {
+      console.log('link clicked');
+    });
+    this.clicked($('#link'));
   });
-
-  // here we listen for a DOM event dispatched by the link on the page
-  b.on('click', link, function(event) {
-    e.preventDefault();
-    console.log('clicked');
-  });
-
-  // triggering an event
-  b.trigger(link, 'click');
-
-});
 ```
 
 An alternative syntax for setting the initial HTML on the page and the external resources is:
 
 ```js
 var atomus = require('atomus');
-var b = atomus.browser({
+var b = atomus({
   html: '<h1>Blah blah</h1>',
   scripts: [
     'vendor/angularjs.min.js',
@@ -77,13 +78,13 @@ var b = atomus.browser({
 * `npm install`
 * `npm test`
 
-You may be interested to see how Atomus work with AngularJS. Checkout `03.angular.spec.js` file.
+You may be interested to see how Atomus works with AngularJS. Checkout `03.angular.spec.js` file.
 
 ## Tips
 
-* Have in mind that often you have to take about the event triggering. For example if you change the value of a input field by setting `.value` property you need to dispatch a `change` event. Otherwise you will not get the listeners called.
-* The global scope is accessible via the window object. So if you import Angular on the page you need to reference it through `window.Angular` and not just `Angular`.
-* Atomus is based on [JSDOM](https://www.npmjs.org/package/jsdom) is not simulating everything. You may not be able to use the History API for example
+* Have in mind that often you have to take care about the events' triggering. For example if you change the value of an input field by setting `.value` property you need to dispatch a `change` event. Otherwise you will not get the listeners called.
+* The global scope is accessible via the window object. So if you import Angular, for example, on the page you need to reference it through `window.Angular` and not just `Angular`.
+* Atomus is based on [JSDOM](https://www.npmjs.org/package/jsdom) which is not simulating everything. You may not be able to use the History API for example.
 
 ## Other resources
 
