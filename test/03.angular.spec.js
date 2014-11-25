@@ -2,7 +2,7 @@ var assert = require('assert');
 suite('AngularJS test', function() {
 
   test('Testing AngularJS directive', function(done) {
-    this.timeout(3000);
+    this.timeout(5000);
 
     var atomus = require('../lib');
     var b = atomus
@@ -20,34 +20,36 @@ suite('AngularJS test', function() {
           var username = b.$('#username');
           var password = b.$('#password');
 
-          register.click();
-          assert.equal(message.innerHTML, 'Missing username.');
+          b.trigger(register, 'click');
+          assert.equal(message.text(), 'Missing username.');
 
-          username.value = 'test';
+          username.val('test');
           b.trigger(username, 'change');
-          register.click();
-          assert.equal(message.innerHTML, 'Missing password.');
+          b.trigger(register, 'click');
+          assert.equal(message.text(), 'Missing password.');
 
-          password.value = 'test';
+          password.val('test');
           b.trigger(password, 'change');
-          register.click();
-          assert.equal(message.innerHTML, 'Too short username.');
+          b.trigger(register, 'click');
+          assert.equal(message.text(), 'Too short username.');
 
-          username.value = 'testtesttesttest';
+          username.val('testtesttesttest');
           b.trigger(username, 'change');
-          register.click();
-          assert.equal(message.innerHTML, 'Too short password.');
+          b.trigger(register, 'click');
+          assert.equal(message.text(), 'Too short password.');
 
-          password.value = 'testtesttesttest';
+          password.val('testtesttesttest');
           b.trigger(password, 'change');
-          register.click();
-          assert.equal(message.innerHTML, '');
+          b.trigger(register, 'click');
+          assert.equal(message.text(), '');
 
           done();
 
         };
         setTimeout(runTests, 1000);
       }
+
+      console.log(b.$('html')[0].outerHTML);
 
       window
         .angular

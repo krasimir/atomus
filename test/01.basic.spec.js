@@ -12,7 +12,7 @@ suite('Basics', function() {
   test('adding initial html', function(done) {
     var atomus = require('../lib');
     var b = atomus.browser().html('<h1>Hello atomus</h1>').ready(function(errors, window) {
-      assert.equal(b.$('body').innerHTML, '<h1>Hello atomus</h1>');
+      assert.equal(b.$('body').html(), '<h1>Hello atomus</h1>');
       done();
     });
   });
