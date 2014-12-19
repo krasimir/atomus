@@ -31,8 +31,7 @@ suite('Events', function() {
 
   test('working with radio boxes', function(done) {
     var atomus = require('../lib');
-    var b = atomus
-    ()
+    var b = atomus()
     .html('<form><input type="radio" name="blah" value="a" /><input type="radio" name="blah" value="b" /></form>')
     .ready(function(errors, window) {
       with(this) {
@@ -49,8 +48,7 @@ suite('Events', function() {
 
   test('working with check boxes', function(done) {
     var atomus = require('../lib');
-    var b = atomus
-    ()
+    var b = atomus()
     .html('<form><input type="checkbox" name="blah" value="a" /><input type="checkbox" name="blah" value="b" /></form>')
     .ready(function(errors, window) {
       with(this) {
@@ -62,6 +60,68 @@ suite('Events', function() {
         assert.equal($('input[value="b"]').is(':checked'), true);
         done();
       }
+    });
+  });
+
+  test('working with changeValueOf (input field)', function(done) {
+    var atomus = require('../lib'), count = 0;
+    var b = atomus()
+    .html('<form><input type="text" /></form>')
+    .ready(function(errors, window) {
+      b.$('input').on('change', function() {
+        if(count === 0) {
+          assert(b.$(this).val(), 'it works');
+          count += 1;
+        } else {
+          assert(b.$(this).val(), 'it works again');
+          done();
+        }        
+      });
+      b
+      .changeValueOf(b.$('input'), 'it works')
+      .changeValueOf(b.window.document.querySelector('input'), 'it works again');
+    });
+  });
+
+  test('working with changeValueOf (textarea field)', function(done) {
+    var atomus = require('../lib'), count = 0;
+    var b = atomus()
+    .html('<form><textarea></textarea></form>')
+    .ready(function(errors, window) {
+      b.$('textarea').on('change', function() {
+        if(count === 0) {
+          assert(b.$(this).val(), 'it works');
+          count += 1;
+        } else {
+          assert(b.$(this).val(), 'it works again');
+          done();
+        }        
+      });
+      b
+      .changeValueOf(b.$('textarea'), 'it works')
+      .changeValueOf(b.window.document.querySelector('textarea'), 'it works again');
+    });
+  });
+
+  test('working with changeValueOf (dropdown field)', function(done) {
+    var atomus = require('../lib'), count = 0;
+    var b = atomus()
+    .html('<form><select><option value="ddd">default</option><option value="a">AAA</option><option value="b">BBB</option></select></form>')
+    .ready(function(errors, window) {
+      b.$('select').on('change', function() {
+        if(count === 0) {
+          assert(b.$(this).val(), 'a');
+          assert(b.window.document.querySelector('select').selectedIndex, 1);
+          count += 1;
+        } else {
+          assert(b.$(this).val(), 'b');
+          assert(b.window.document.querySelector('select').selectedIndex, 2);
+          done();
+        }        
+      });
+      b
+      .changeValueOf(b.$('select'), 'a')
+      .changeValueOf(b.window.document.querySelector('select'), 'b');
     });
   });
 

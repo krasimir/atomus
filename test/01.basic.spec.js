@@ -37,4 +37,18 @@ suite('Basics', function() {
     });
   });
 
+  test('testing waitUntil with promise interface', function(done) {
+    var atomus = require('../lib');
+    var b = atomus().html('<body></body>').ready(function(errors, window) {
+      b.waitUntil('#awesome').then(function(el) {
+        assert.equal(this.$('body') instanceof b.window.jQuery, true);
+        assert.equal(el.attr('id'), 'awesome');
+        done();
+      });
+      setTimeout(function() {
+        b.$('body').html('<div id="awesome"></div>');
+      }, 110);
+    });
+  });
+
 });
