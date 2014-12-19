@@ -64,7 +64,7 @@ suite('XMLHTTPRequest', function() {
     var atomus = require('../lib');
     var b = atomus()
     .external(__dirname + '/data/ajaxwrapper.js')
-    .ready(function(errors, window) {
+    .ready(function(errors, window) {      
       b.addXHRMock(mockups)
       window.AjaxWrapper().request({
         url: '/api/method/action',
@@ -72,12 +72,19 @@ suite('XMLHTTPRequest', function() {
       }).done(function(result) {
         assert(result.id, 'AAA');
         
+        var log = b.network.getLog();
         window.AjaxWrapper().request({
           url: '/api/method/action',
           json: true,
           method: 'POST'
         }).done(function(result) {
           assert(result.success, 'OK');
+          assert.deepEqual(log.requests,
+            [
+              { method: 'GET', url: '/api/method/action', async: true },
+              { method: 'POST', url: '/api/method/action', async: true }
+            ]
+          );
           done();
         });
 
