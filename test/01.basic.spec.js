@@ -25,4 +25,16 @@ suite('Basics', function() {
     });
   });
 
+  test('testing waitUntil', function(done) {
+    var atomus = require('../lib');
+    var b = atomus().html('<body></body>').ready(function(errors, window) {
+      b.waitUntil('#awesome', function($el) {
+        done();
+      });
+      setTimeout(function() {
+        b.$('body').html('<div id="awesome"></div>');
+      }, 110);
+    });
+  });
+
 });

@@ -43,6 +43,7 @@ Once the `ready` method is called we have a few other methods and objects availa
 * `browser.focused([jQuery object or DOM element])` - fires `focus` event
 * `browser.blurred([jQuery object or DOM element])` - fires `blur` event
 * `browser.selected([jQuery object or DOM element])` - fires `click` event. Use this while you operate with radio or checkboxes. 
+* `browser.waitUntil([element's selector], [function])` - it calls the function once the element matching the elector exists in the DOM
 
 JSDom has some problems with radio and checkboxes selecting. That's why we introduced API methods for triggering events. For sure you may use `$('#link').trigger('click')` but that's not working properly in some cases. So, we recommend using `browser` API for dispatching DOM events.
 
