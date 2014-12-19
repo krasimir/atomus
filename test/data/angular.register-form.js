@@ -14,7 +14,7 @@ registerFormDirective = function() {
         <span id="message">{{message}}</span>\
       </form>\
     ',
-    controller: function($scope) {      
+    controller: function($scope) {
       var validateInput = function() {
         var u = $scope.username;
         var p = $scope.password;

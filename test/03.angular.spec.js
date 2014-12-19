@@ -11,52 +11,54 @@ suite('AngularJS test', function() {
     .external(__dirname + '/data/angular.register-form.js')
     .ready(function(errors, window) {
       if(errors !== null) console.log(errors);
-      
+
       var Controller = function($scope) {
-        var runTests = function() {
+        setTimeout(function() {
+          runTests();
+        }, 300);
+      };
+      
+      var runTests = function() {
 
-          var register = b.$('#register-button');
-          var message = b.$('#message');
-          var username = b.$('#username');
-          var password = b.$('#password');
+        var register = b.$('#register-button');
+        var message = b.$('#message');
+        var username = b.$('#username');
+        var password = b.$('#password');
 
-          b.clicked(register);
-          assert.equal(message.text(), 'Missing username.');
+        b.clicked(register);
+        assert.equal(message.text(), 'Missing username.');
 
-          username.val('test');
-          b.changed(username);
-          b.clicked(register);
-          assert.equal(message.text(), 'Missing password.');
+        username.val('test');
+        b.changed(username);
+        b.clicked(register);
+        assert.equal(message.text(), 'Missing password.');
 
-          password.val('test');
-          b.changed(password);
-          b.clicked(register);
-          assert.equal(message.text(), 'Too short username.');
+        password.val('test');
+        b.changed(password);
+        b.clicked(register);
+        assert.equal(message.text(), 'Too short username.');
 
-          username.val('testtesttesttest');
-          b.changed(username);
-          b.clicked(register);
-          assert.equal(message.text(), 'Too short password.');
+        username.val('testtesttesttest');
+        b.changed(username);
+        b.clicked(register);
+        assert.equal(message.text(), 'Too short password.');
 
-          password.val('testtesttesttest');
-          b.changed(password);
-          b.clicked(register);
-          assert.equal(message.text(), '');
+        password.val('testtesttesttest');
+        b.changed(password);
+        b.clicked(register);
+        assert.equal(message.text(), '');
 
-          done();
+        done();
 
-        };
-        setTimeout(runTests, 500);
-      }
+      };
 
-      window
+      var app = window
       .angular
       .module('app', [])
       .controller('Controller', Controller)
       .directive('registerForm', window.registerFormDirective);
 
       window.angular.bootstrap(window.document, ['app']);
-
     });
   });
 
