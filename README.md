@@ -45,12 +45,13 @@ Once the `ready` method is called we have a few other methods and objects availa
 * `browser.selected([jQuery object or DOM element])` - fires `click` event. Use this while you operate with radio or checkboxes. 
 * `browser.waitUntil([element's selector], [function])` - it calls the function once the element matching the elector exists in the DOM
 * `browser.changeValueOf([jQuery object or DOM element], [value])` - use this method to change the value of text input, textarea or dropdown/select element. It changes the value and dispatches a `change` event.
+* `browser.addXHRMock([object or array])` - by default Atomus performs real HTTP requests. That's a way to mock these requests and provide your own response. Checkout the example section below.
 
 JSDom has some problems with radio and checkboxes selecting. That's why we introduced API methods for triggering events. For sure you may use `$('#link').trigger('click')` but that's not working properly in some cases. So, we recommend using `browser` API for dispatching DOM events.
 
 ## Example
 
-Clicking a link on the page.
+### Clicking a link on the page.
 
 ```js
   var atomus = require('atomus');
@@ -78,6 +79,52 @@ var b = atomus({
   ]
 });
 ```
+### Mocking HTTP requests
+
+```js
+
+var mockups = [
+  { 
+    url: '/api/method/action',
+    response: {
+      status: 200,
+      responseText: JSON.stringify({"id": "AAA"})
+    }
+  },
+  { 
+    url: '/api/method/action',
+    method: 'POST',
+    response: {
+      status: 200,
+      responseText: JSON.stringify({"success": "OK"})
+    }
+  }
+];
+
+var atomus = require('../lib');
+var b = atomus()
+.external(__dirname + '/data/ajaxwrapper.js')
+.ready(function(errors, window) {
+  b.addXHRMock(mockups);
+
+  window.AjaxWrapper().request({
+    url: '/api/method/action',
+    json: true
+  }).done(function(result) {
+    console.log(result.id); // AAA
+    
+    window.AjaxWrapper().request({
+      url: '/api/method/action',
+      json: true,
+      method: 'POST'
+    }).done(function(result) {
+      console.log(result.success); // OK
+    });
+
+  });
+
+});
+```
 
 ## Tests
 
@@ -97,3 +144,8 @@ Checkout the `test` folder. There are tests that run Atomus against [AngularJS](
 
 * [Unit test your client-side JavaScript](http://krasimirtsonev.com/blog/article/unit-test-your-client-side-javascript-jsdom-nodejs)
 * [JSDOM](https://www.npmjs.org/package/jsdom) 
+
+## Contributers
+
+* [Krasimir Tsonev](https://github.com/krasimir)
+* [Robin Allen](https://github.com/robin-allen)

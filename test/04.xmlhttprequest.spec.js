@@ -20,4 +20,69 @@ suite('XMLHTTPRequest', function() {
     });
   });
 
+  test('faking HTTP request', function(done) {
+    var mockups = { 
+      url: '/api/method/action',
+      response: {
+        status: 200,
+        responseText: JSON.stringify({"id": "AAA"})
+      }
+    };
+    var atomus = require('../lib');
+    var b = atomus()
+    .external(__dirname + '/data/ajaxwrapper.js')
+    .ready(function(errors, window) {
+      b.addXHRMock(mockups)
+      window.AjaxWrapper().request({
+        url: '/api/method/action',
+        json: true
+      }).done(function(result) {
+        assert(result.id, 'AAA');
+        done();
+      })
+    });
+  });
+
+  test('faking HTTP request and make difference between GET and POST', function(done) {
+    var mockups = [
+      { 
+        url: '/api/method/action',
+        response: {
+          status: 200,
+          responseText: JSON.stringify({"id": "AAA"})
+        }
+      },
+      { 
+        url: '/api/method/action',
+        method: 'POST',
+        response: {
+          status: 200,
+          responseText: JSON.stringify({"success": "OK"})
+        }
+      }
+    ];
+    var atomus = require('../lib');
+    var b = atomus()
+    .external(__dirname + '/data/ajaxwrapper.js')
+    .ready(function(errors, window) {
+      b.addXHRMock(mockups)
+      window.AjaxWrapper().request({
+        url: '/api/method/action',
+        json: true
+      }).done(function(result) {
+        assert(result.id, 'AAA');
+        
+        window.AjaxWrapper().request({
+          url: '/api/method/action',
+          json: true,
+          method: 'POST'
+        }).done(function(result) {
+          assert(result.success, 'OK');
+          done();
+        });
+
+      });
+    });
+  });
+
 });
