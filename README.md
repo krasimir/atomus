@@ -42,6 +42,7 @@ Once the `ready` method is called we have a few other methods and objects availa
 * `browser.changed([jQuery object or DOM element])` - fires `change` event
 * `browser.focused([jQuery object or DOM element])` - fires `focus` event
 * `browser.blurred([jQuery object or DOM element])` - fires `blur` event
+* `browser.keypressed([jQuery object or DOM element], [keyCode])` - fires `keypress` event with particular **keyCode**.
 * `browser.selected([jQuery object or DOM element])` - fires `click` event. Use this while you operate with radio or checkboxes. 
 * `browser.waitUntil([element's selector], [function])` - it calls the function once the element matching the elector exists in the DOM
 * `browser.changeValueOf([jQuery object or DOM element], [value])` - use this method to change the value of text input, textarea or dropdown/select element. It changes the value and dispatches a `change` event.

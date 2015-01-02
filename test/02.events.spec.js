@@ -125,4 +125,29 @@ suite('Events', function() {
     });
   });
 
+  test('triggering keypress with particular keyCode', function(done) {
+    var atomus = require('../lib');
+    var b = atomus()
+    .html('<form><input type="button" /></form>')
+    .ready(function(errors, window) {
+      b.$('input').on('keypress', function(e) {
+        assert(e.keyCode, 13);
+        done();       
+      });
+      b.keypressed(b.$('input'), 13); // enter key
+    });
+  });
+
+  test('triggering keypress with particular keyCode (addEventListener)', function(done) {
+    var atomus = require('../lib');
+    var b = atomus()
+    .html('<form><input type="button" /></form>')
+    .ready(function(errors, window) {
+      window.document.querySelector('input').addEventListener('keypress', function(e) {
+        done();
+      });
+      b.keypressed(b.$('input'), 13); // enter key
+    });
+  });
+
 });
