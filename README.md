@@ -33,6 +33,7 @@ The `window` that is passed to our callback is the good old Window object that w
 * `browser.ready([callback])` - call this method when you are ready with configuring your browser. The callback receives `errors` and `window` object.
 * `browser.external([filepath])` - add an absolute path to JavaScript file that you want to be injected into the page. This may be a framework or custom bundled JavaScript for example.
 * `browser.html([string])` - the initial HTML markup of the page
+* `browser.injectJS([string])` - injects JavaScript just before the closing of `<head>` tag
 
 Once the `ready` method is called we have a few other methods and objects available. 
 
@@ -128,6 +129,17 @@ var b = atomus()
 });
 ```
 
+### Using `localStorage`
+
+```js
+var b = atomus()
+.html('<html><head></head><body></body></html>')
+.injectJS('var getTheAnswer = function() { return 42; }')
+.ready(function(errors, window) {
+  console.log(window.getTheAnswer()); // 42
+});
+```
+
 ## Tests
 
 * `npm install`
@@ -141,6 +153,7 @@ Checkout the `test` folder. There are tests that run Atomus against [AngularJS](
 * The global scope is accessible via the window object. So if you import Angular, for example, on the page you need to reference it through `window.Angular` and not just `Angular`.
 * Atomus is based on [JSDOM](https://www.npmjs.org/package/jsdom) which is not simulating everything. You may not be able to use the History API for example.
 * Atomus attaches a function `window.log` before to run the `ready` callback. Usa that methods to send data to the console from within your application.
+* The library supports `localStorage`. However, it is not part of jsdom. It's a polyfill.
 
 ## Other resources
 
