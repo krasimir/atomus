@@ -129,7 +129,7 @@ var b = atomus()
 });
 ```
 
-### Using `localStorage`
+### Injecting JavaScript into the head of the document
 
 ```js
 var b = atomus()
