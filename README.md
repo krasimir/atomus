@@ -147,12 +147,12 @@ var b = atomus()
 
 Checkout the `test` folder. There are tests that run Atomus against [AngularJS](https://angularjs.org/) and [Ractive.js](http://www.ractivejs.org/) frameworks.
 
-## Tips
+## Notes
 
 * Have in mind that often you have to take care about the events' triggering. For example if you change the value of an input field by setting `.value` property you need to dispatch a `change` event. Otherwise you will not get the listeners called.
 * The global scope is accessible via the window object. So if you import Angular, for example, on the page you need to reference it through `window.Angular` and not just `Angular`.
 * Atomus is based on [JSDOM](https://www.npmjs.org/package/jsdom) which is not simulating everything. You may not be able to use the History API for example.
-* Atomus attaches a function `window.log` before to run the `ready` callback. Usa that methods to send data to the console from within your application.
+* Atomus successfully patches the `console.log` calls so you receive all the logs into the terminal
 * The library supports `localStorage`. However, it is not part of jsdom. It's a polyfill.
 
 ## Other resources

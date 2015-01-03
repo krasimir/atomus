@@ -3,7 +3,7 @@ suite('Local storage', function() {
 
   test('Creating a component', function(done) {
     var atomus = require('../lib');
-    var b = atomus({ polyfillLocalStorage: true })
+    var b = atomus()
     .html('<body><main></main></body>')
     .ready(function(errors, window) {
       assert(!!window.localStorage);
