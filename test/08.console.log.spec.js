@@ -54,4 +54,19 @@ suite('Transferring console.logs', function() {
     });
   });
 
+  test('Make sure that it polyfills all the console methods', function(done) {
+    var logs = [];
+    console.log = function(o) {
+      logs.push(o);
+    };
+    var atomus = require('../lib');
+    var b = atomus()
+    .injectJS('console.info(\'hello\');console.group(\'world\');')
+    .ready(function(errors, window) {
+      assert.deepEqual(logs, ['hello', 'world'])
+      console.log = original;
+      done();
+    });
+  });
+
 });
