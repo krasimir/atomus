@@ -1,6 +1,6 @@
 {
   "name": "atomus",
-  "version": "0.1.12",
+  "version": "0.1.13",
   "description": "A small utility for running client-side tests in Node.js environment",
   "main": "./lib/index.js",
   "author": {

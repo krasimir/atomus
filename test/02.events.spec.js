@@ -150,4 +150,16 @@ suite('Events', function() {
     });
   });
 
+  test('triggering whatever event with particular keyCode', function(done) {
+    var atomus = require('../lib');
+    var b = atomus()
+    .html('<form><input type="button" /></form>')
+    .ready(function(errors, window) {
+      window.document.querySelector('input').addEventListener('keydown', function(e) {
+        done();
+      });
+      b.triggerEvent(b.$('input'), 'keydown', 13); // enter key
+    });
+  });
+
 });
